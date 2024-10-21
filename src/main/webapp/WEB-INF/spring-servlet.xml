@@ -13,55 +13,59 @@
                            http://www.springframework.org/schema/tx 
                            http://www.springframework.org/schema/tx/spring-tx.xsd">
                            
-    <!-- Enable Annotation-based Transactions -->
-    <tx:annotation-driven />
+     <tx:annotation-driven />          
+         <context:component-scan base-package="student"></context:component-scan>
+         
+   
 
-    <!-- Component Scanning (Ensure correct package name) -->
-<context:component-scan base-package="student" />
-
-    <!-- View Resolver Configuration -->
-    <bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-        id="viewResolver">
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
-
-    <!-- DataSource Configuration -->
-    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="ds">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://raj-database.ch4c2sk2mldv.ap-south-1.rds.amazonaws.com:3306/student" />
-        <property name="username" value="admin" />
-        <property name="password" value="springrajpassword" />
-    </bean>
-
-    <!-- Hibernate SessionFactory Configuration -->
-    <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" id="localfactory">
-        <property name="dataSource" ref="ds" />
-        <property name="hibernateProperties">
-            <props>
-                <!-- Use MySQL8Dialect if you are using MySQL 8.0 -->
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
-        <property name="annotatedClasses">
-            <list>
-                <value>student.Model.Student</value>
-                <value>student.Model.Admin</value>
-            </list>
-        </property>
-    </bean>
-
-    <!-- Hibernate Template for DAO Access -->
-    <bean class="org.springframework.orm.hibernate5.HibernateTemplate" id="hibernateTemplate">
-        <property name="sessionFactory" ref="localfactory" />
-    </bean>
-
-    <!-- Transaction Manager for Hibernate -->
-    <bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" id="transactionManager">
-        <property name="sessionFactory" ref="localfactory" />
-    </bean>
-
-</beans>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		id="viewResolver">
+		<property name="prefix" value="/WEB-INF/Views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>      
+             
+       <bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		name="ds">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://raj-database.ch4c2sk2mldv.ap-south-1.rds.amazonaws.com:3306/student" />
+		<property name="username" value="admin" />
+		<property name="password" value="springrajpassword" />
+	</bean>      
+             
+      <bean
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		name="localfactory">
+		<property name="dataSource" ref="ds" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>student.Model.Student</value>
+				<value>student.Model.Admin</value>
+			</list>
+		</property>
+	</bean>       
+             
+        <bean class="org.springframework.orm.hibernate5.HibernateTemplate"
+		name="hibernateTemplate">
+		<property name="sessionFactory" ref="localfactory" />
+	</bean>
+             <bean
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		name="transactionManager">
+		<property name="sessionFactory" ref="localfactory" />
+	</bean>         
+	
+	
+	
+	 
+       
+</beans>                           
